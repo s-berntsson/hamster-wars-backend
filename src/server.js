@@ -2,6 +2,8 @@
 const express = require('express')
 const app = express()
 
+const { hamstersRouter } = require('./routes/hamsters')
+
 // PORT
 const PORT = process.env.PORT || 8000
 
@@ -13,7 +15,7 @@ app.use((req, res, next) => {
 })
 
 // routes/endpoints
-
+app.use('/hamsters', hamstersRouter)
 
 //starta server
 app.listen(PORT, () => {
