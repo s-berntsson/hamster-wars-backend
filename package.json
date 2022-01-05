@@ -4,7 +4,9 @@
   "description": "REST API through firestore and Express",
   "main": "index.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "populate": "node src/dev-scripts/populate.js",
+    "clear": "node src/dev-scripts/clear.js"
   },
   "keywords": [
     "firestore",
