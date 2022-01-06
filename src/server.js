@@ -8,6 +8,8 @@ const { hamstersRouter } = require('./routes/hamsters')
 const PORT = process.env.PORT || 8000
 
 // middleware
+app.use( express.json() )
+
 app.use((req, res, next) => {
     //logger
     console.log(req.method, req.url)

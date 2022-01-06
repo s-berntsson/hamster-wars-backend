@@ -10,6 +10,7 @@ const getAll = async (database, collection) => {
 
     let array = [];
 
+    //Spara data i array
     await colSnapshot.forEach(docSnapshot => {
         const data = docSnapshot.data()
         data.id = docSnapshot.id
@@ -22,28 +23,17 @@ const getAll = async (database, collection) => {
 //GET ONE (based on ID)
 const getOne = async (database, collection, id) => {
     const docRef = database.collection(collection).doc(id)
-    const docSnapshot = await docRef.get()
-
-    if (!docSnapshot.exists) {    //Kontrollera att datan finns
-        return {}
-    }
-
+    const docSnapshot = await docRef.get()  //Bad request returnerar undefined, som hanteras i routern
     const data = await docSnapshot.data()
-
     return data
 }
 
 //GET RANDOM
 const getRandom = async (database, collection) => {
-    //Hämta alla
     const documents = await getAll(database, collection)
-
-    //Skapa random index
     const index = Math.floor( Math.random() * documents.length )
-
-    //Hämta dokument baserat på index
     const data = documents[index]
-    
+
     return data
 }
 
