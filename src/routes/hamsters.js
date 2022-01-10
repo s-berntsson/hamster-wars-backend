@@ -11,6 +11,7 @@ const HAMSTERS = 'hamsters' //Collection name
 const { getAll, getOne, getRandom } = require('../CRUD-functions/get.js');
 const { post } = require('../CRUD-functions/post.js');
 const { put } = require('../CRUD-functions/put.js');
+const { deleteOne } = require('../CRUD-functions/delete.js');
 
 
 // GET RANDOM
@@ -55,5 +56,17 @@ hamstersRouter.put('/:id', async (req, res) => {
     res.status(result.code).send(result.message)
 })
 
+//DELETE
+hamstersRouter.delete('/:id', async (req, res) =>{
+    //Statuskod
+    const result = await deleteOne(db, HAMSTERS, req.params.id)
+
+    if(!result){
+        res.sendStatus(404)
+    }
+
+    console.log(result)
+    res.sendStatus(200)
+})
 
 module.exports = { hamstersRouter }
