@@ -8,7 +8,7 @@ const db = connect();
 const HAMSTERS = 'hamsters' //Collection name
 
 // Import CRUD functions
-const { getAll, getOne, getRandom } = require('../CRUD-functions/get.js');
+const { getAll, getOne, getRandom, getCutest } = require('../CRUD-functions/get.js');
 const { post } = require('../CRUD-functions/post.js');
 const { put } = require('../CRUD-functions/put.js');
 const { deleteOne } = require('../CRUD-functions/delete.js');
@@ -21,21 +21,28 @@ hamstersRouter.get('/random', async (req, res) => {
     res.send(hamster)
 })
 
+//GET CUTEST
+hamstersRouter.get('/cutest', async (req, res) => {
+    let winners = await getCutest(db, HAMSTERS)
+
+    res.send(winners)
+})
+
 //GET ONE
 hamstersRouter.get('/:id', async (req, res) => {
     let response = await getOne(db, HAMSTERS, req.params.id)
     if(!response){   //Bad request returnerar undefined som hanteras här
         res.sendStatus(404)
-    }
+    }    
     res.send(response)
-})
+})    
 
 // GET ALL
 hamstersRouter.get('/', async (req, res) => {
     let hamsters = await getAll(db, HAMSTERS)
     //FELHANTERING !!!!!
     res.send(hamsters)
-})
+})    
 
 // POST
 hamstersRouter.post('/', async (req, res) => {

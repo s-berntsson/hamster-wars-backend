@@ -37,4 +37,33 @@ const getRandom = async (database, collection) => {
     return data
 }
 
-module.exports = { getAll, getOne, getRandom }
+//GET CUTEST
+const getCutest = async (database, collection) =>{
+    //getAll
+    const colSnapshot = await getAll(database, collection)
+
+    let cuteScores = [];
+
+    //Calculate score for each ham, save in array along with id
+    colSnapshot.forEach(docSnapshot => {
+        const cuteScore = docSnapshot.wins - docSnapshot.defeats
+        cuteScores.push({id: docSnapshot.id, score: cuteScore})
+    })
+
+    //Sort cutescores descending
+    cuteScores.sort((a, b) => b.score - a.score)
+
+    let winners = []
+    const nrOfWinners = 5
+
+    //Get as many winners as declared in nrOfWinners by getting x first in array
+    for(let i = 0; i<nrOfWinners; i++){
+        const winnerId = cuteScores[i].id
+        const winner = colSnapshot.find(obj => obj.id === winnerId) 
+        winners.push(winner)
+    }
+
+    return winners
+}
+
+module.exports = { getAll, getOne, getRandom, getCutest }
